@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spagobi
+  namespace: spagobi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spagobi
+  template:
+    metadata:
+      labels:
+        app: spagobi
+    spec:
+      containers:
+        - name: spagobi
+          image: spagobilabs/spagobi:all-in-one
+          env:
+            - name: DB_ENV_MYSQL_USER
+              value: spagobiuser
+            - name: DB_ENV_MYSQL_PASSWORD
+              value: spagobipassword
+            - name: DB_ENV_MYSQL_DATABASE
+              value: spagobidb
+            - name: DB_PORT_3306_TCP_ADDR
+              value: mysql
+            - name: DB_PORT_3306_TCP_PORT
+              value: "3306"
+          ports:
+            - containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: spagobi
+  namespace: spagobi
+spec:
+  selector:
+    app: spagobi
+  type: NodePort
+  ports:
+  - name: spagobi
+    port: 8080
+    targetPort: 8080
+    nodePort: 32000

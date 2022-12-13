@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: spagobi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5.5
+          env:
+            - name: MYSQL_USER
+              value: spagobiuser
+            - name: MYSQL_PASSWORD
+              value: spagobipassword
+            - name: MYSQL_DATABASE
+              value: spagobidb
+            - name: MYSQL_ROOT_PASSWORD
+              value: spagobirootpassword
+          ports:
+            - containerPort: 3306
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql
+  namespace: spagobi
+spec:
+  selector:
+    app: mysql
+  ports:
+    - name: mysql
+      port: 3306
+      targetPort: 3306
