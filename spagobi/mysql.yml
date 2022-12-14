@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: mysql:5.5
+          image: mysql:latest
           env:
             - name: MYSQL_USER
               value: spagobiuser
