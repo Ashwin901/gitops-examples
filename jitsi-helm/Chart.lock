@@ -1,0 +1,6 @@
+dependencies:
+- name: prosody
+  repository: ""
+  version: '*'
+digest: sha256:199467cb03cbfea3006223951f4a00226190cf78b170e88298fee6bd8d7f1fa2
+generated: "2022-12-10T00:13:13.560578+08:00"
